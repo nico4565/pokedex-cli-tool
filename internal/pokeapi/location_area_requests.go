@@ -15,6 +15,18 @@ func (c *Client) GetLocationAreaList(urlPtr *string) (LocationAreaResponse, erro
 		url = *urlPtr
 	}
 
+	var body []byte
+
+	if val, ok := c.cache.Get(url); ok {
+		locationsResp := LocationAreaResponse{}
+		err := json.Unmarshal(val, &locationsResp)
+		if err != nil {
+			return LocationAreaResponse{}, err
+		}
+
+		return locationsResp, nil
+	}
+
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return LocationAreaResponse{}, err
@@ -25,7 +37,7 @@ func (c *Client) GetLocationAreaList(urlPtr *string) (LocationAreaResponse, erro
 		return LocationAreaResponse{}, err
 	}
 	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
+	body, err = io.ReadAll(resp.Body)
 
 	if resp.StatusCode > 299 {
 		log.Fatalf("Response failed with status code: %d and\nbody: %s\n", resp.StatusCode, body)
@@ -34,6 +46,7 @@ func (c *Client) GetLocationAreaList(urlPtr *string) (LocationAreaResponse, erro
 		log.Fatal(err)
 		return LocationAreaResponse{}, err
 	}
+	c.cache.Add(url, body)
 
 	lAResponse := LocationAreaResponse{}
 	err = json.Unmarshal(body, &lAResponse)

@@ -5,7 +5,6 @@ import (
 )
 
 func commandMap(c *config) error {
-
 	locationAResponse, err := c.httpClient.GetLocationAreaList(c.nextUrl)
 	if err != nil {
 		return err
