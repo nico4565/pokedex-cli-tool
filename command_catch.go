@@ -28,6 +28,7 @@ func commandCatch(c *config, args ...string) error {
 		if _, exists := c.caughtPokemon[pokemonName]; !exists {
 			c.caughtPokemon[pokemonName] = PokemonResponse
 		}
+		fmt.Println("You may now inspect it with the inspect command.")
 		return err
 	}
 
