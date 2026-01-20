@@ -83,8 +83,13 @@ func getCommands() map[string]cliCommand {
 		},
 		"catch": {
 			name:        "catch",
-			description: "Takes a pokemon (name or id) after the catch command, it catch can either be succesfull or not, if it is you get to save the pokemon on your pokedex. If you don't specify a pokemon the command will print a message asking to add one.",
+			description: "Takes a pokemon (name or id) after the catch command, it catch can either be succesfull or not, if it is you get to save the pokemon on your pokedex.",
 			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "Takes a pokemon (name or id) after the inspect command, if you have cought said pokemon the command will print all the related pokemon details.",
+			callback:    commandInspect,
 		},
 	}
 }

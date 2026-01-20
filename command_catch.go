@@ -8,7 +8,7 @@ import (
 
 func commandCatch(c *config, args ...string) error {
 	if len(args) != 1 {
-		return errors.New("Command catch requires just one pokemon (id or name) argument! More than one (or maybe zero) arguments found, avoid unrequired spaces in your location area es. area 1 instead of area-1")
+		return errors.New("Command catch requires just one pokemon (id or name) argument! More than one/no argument found, avoid unrequired spaces!")
 	}
 
 	pokemonName := args[0]
