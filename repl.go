@@ -10,9 +10,10 @@ import (
 )
 
 type config struct {
-	httpClient  pokeapi.Client
-	nextUrl     *string
-	previousUrl *string
+	httpClient    pokeapi.Client
+	nextUrl       *string
+	previousUrl   *string
+	caughtPokemon map[string]pokeapi.Pokemon
 }
 
 type cliCommand struct {
@@ -79,6 +80,11 @@ func getCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "Takes a location area after the explore command and gives back a list of pokemon present in the area. If you don't specify a location are the command will print a message asking to add one.",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Takes a pokemon (name or id) after the catch command, it catch can either be succesfull or not, if it is you get to save the pokemon on your pokedex. If you don't specify a pokemon the command will print a message asking to add one.",
+			callback:    commandCatch,
 		},
 	}
 }

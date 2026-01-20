@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func (c *Client) GetLocationAreaList(urlPtr *string) (LocationAreaResponse, error) {
+func (c *Client) GetLocationAreaList(urlPtr *string) (LocationArea, error) {
 
 	url := baseURL + "/location-area"
 	if urlPtr != nil {
@@ -18,10 +18,10 @@ func (c *Client) GetLocationAreaList(urlPtr *string) (LocationAreaResponse, erro
 	var body []byte
 
 	if val, ok := c.cache.Get(url); ok {
-		locationsResp := LocationAreaResponse{}
+		locationsResp := LocationArea{}
 		err := json.Unmarshal(val, &locationsResp)
 		if err != nil {
-			return LocationAreaResponse{}, err
+			return LocationArea{}, err
 		}
 
 		return locationsResp, nil
@@ -29,12 +29,12 @@ func (c *Client) GetLocationAreaList(urlPtr *string) (LocationAreaResponse, erro
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return LocationAreaResponse{}, err
+		return LocationArea{}, err
 	}
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return LocationAreaResponse{}, err
+		return LocationArea{}, err
 	}
 	defer resp.Body.Close()
 	body, err = io.ReadAll(resp.Body)
@@ -44,11 +44,11 @@ func (c *Client) GetLocationAreaList(urlPtr *string) (LocationAreaResponse, erro
 	}
 	if err != nil {
 		log.Fatal(err)
-		return LocationAreaResponse{}, err
+		return LocationArea{}, err
 	}
 	c.cache.Add(url, body)
 
-	lAResponse := LocationAreaResponse{}
+	lAResponse := LocationArea{}
 	err = json.Unmarshal(body, &lAResponse)
 	if err != nil {
 		fmt.Println(err)
@@ -57,20 +57,17 @@ func (c *Client) GetLocationAreaList(urlPtr *string) (LocationAreaResponse, erro
 	return lAResponse, nil
 }
 
-func (c *Client) GetLocationAreaDetailedResponse(urlPtr *string, nameOrIdLocation string) (LocationAreaDetailedResponse, error) {
+func (c *Client) GetLocationAreaDetailedResponse(nameOrIdLocation string) (LocationAreaDetailed, error) {
 
 	url := baseURL + "/location-area" + "/" + nameOrIdLocation
-	if urlPtr != nil {
-		url = *urlPtr
-	}
 
 	var body []byte
 
 	if val, ok := c.cache.Get(url); ok {
-		locationsResp := LocationAreaDetailedResponse{}
+		locationsResp := LocationAreaDetailed{}
 		err := json.Unmarshal(val, &locationsResp)
 		if err != nil {
-			return LocationAreaDetailedResponse{}, err
+			return LocationAreaDetailed{}, err
 		}
 
 		return locationsResp, nil
@@ -78,12 +75,12 @@ func (c *Client) GetLocationAreaDetailedResponse(urlPtr *string, nameOrIdLocatio
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return LocationAreaDetailedResponse{}, err
+		return LocationAreaDetailed{}, err
 	}
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return LocationAreaDetailedResponse{}, err
+		return LocationAreaDetailed{}, err
 	}
 	defer resp.Body.Close()
 	body, err = io.ReadAll(resp.Body)
@@ -93,11 +90,11 @@ func (c *Client) GetLocationAreaDetailedResponse(urlPtr *string, nameOrIdLocatio
 	}
 	if err != nil {
 		log.Fatal(err)
-		return LocationAreaDetailedResponse{}, err
+		return LocationAreaDetailed{}, err
 	}
 	c.cache.Add(url, body)
 
-	response := LocationAreaDetailedResponse{}
+	response := LocationAreaDetailed{}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
 		fmt.Println(err)
