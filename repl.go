@@ -91,6 +91,11 @@ func getCommands() map[string]cliCommand {
 			description: "Takes a pokemon (name or id) after the inspect command, if you have cought said pokemon the command will print all the related pokemon details.",
 			callback:    commandInspect,
 		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Shows a list of pokemon caught.",
+			callback:    commandPokedex,
+		},
 	}
 }
 
