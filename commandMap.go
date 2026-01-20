@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func commandMap(c *config) error {
+func commandMap(c *config, args ...string) error {
 	locationAResponse, err := c.httpClient.GetLocationAreaList(c.nextUrl)
 	if err != nil {
 		return err

@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func commandMapBack(c *config) error {
+func commandMapBack(c *config, args ...string) error {
 
 	if c.previousUrl == nil {
 		return errors.New("you're on the first page")
